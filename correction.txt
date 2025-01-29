@@ -1,0 +1,49 @@
+To ensure the data persists when you navigate between steps, you can follow these steps:
+
+`1.Pass formData to Each Component: Modify your components to receive the current form data as props and populate their fields based on that data.
+//
+{step === 1 && <FarmerInfo formData={formData} updateFormData={updateFormData} />}
+{step === 2 && <FarmLandInfo formData={formData} updateFormData={updateFormData} />}
+{step === 3 && <FarmYieldInfo formData={formData} updateFormData={updateFormData} />}
+
+///
+
+2. Update Each Form Component
+
+For example, here’s how to update FarmerInfo to utilize formData:
+
+FarmerInfo.jsx
+
+///
+import React from 'react';
+
+const FarmerInfo = ({ formData, updateFormData }) => {
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        updateFormData({ [name]: value });
+    };
+
+    return (
+        <div>
+            <label>Famer ID:</label>
+            <input
+                type="text"
+                name="famer_id"
+                value={formData.famer_id || ''}
+                onChange={handleChange}
+                required
+            />
+            <label>First Name:</label>
+            <input
+                type="text"
+                name="first_name"
+                value={formData.first_name || ''}
+                onChange={handleChange}
+                required
+            />
+            {/* Add other fields similarly */}
+        </div>
+    );
+};
+
+export default FarmerInfo;
